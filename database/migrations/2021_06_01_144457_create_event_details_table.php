@@ -17,7 +17,7 @@ class CreateEventDetailsTable extends Migration
             $table->id();
 			$table->unsignedBigInteger('event_id');
 			$table->date('date');
-			$table->time('time');
+			$table->time('time')->nullable();
             $table->timestamps();
         });
     }

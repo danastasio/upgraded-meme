@@ -25,7 +25,6 @@ class EventRequest extends FormRequest
     {
         return [
             'date.*' => 'sometimes|required|date',
-			'time.*' => 'sometimes|required',
 			'event_name' => 'sometimes|required',
 			'name' => 'sometimes|required',
 			'radio*' => 'sometimes|required',
