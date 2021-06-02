@@ -1,26 +1,28 @@
 <x-app-layout>
 	@include('flash-message')
 
-	<div class='text-center mb-10 font-bold text-2xl'>
+	<div class='text-center my-10 font-bold text-2xl'>
 		{{ @$event_responses[0]['name'] }}
 	</div>
 
 	<form method="post" action="{{ route('response.store') }}">
 		@csrf
-		<div class="grid grid-cols-{{ count($event_details) + 1}} max-w-5xl gap-2 mx-auto">
-		<div></div>
-		@foreach( $event_details as $details)
-			<div class='text-center'>
-				<div>{{ $details->date }}</div>
-				<div>{{ $details->time }}</div>
-			</div>
-		@endforeach
+		<div class="grid grid-cols-{{ count($event_details) + 1}} max-w-6xl gap-2 mx-auto">
+			<div></div>
+			@foreach( $event_details as $details)
+				<div class='text-center sticky top-0 bg-gray-100 bg-opacity-100 divide-x-2 divide-dashed divide-green-600 py-3'>
+					<div>{{ date("l jS M, Y", strtotime($details->date)) }}</div>
+					@if(isset($details->time))
+						<div>{{ date("g:i a", strtotime($details->time)) }}</div>
+					@endif
+				</div>
+			@endforeach
 
 		<!-- already responses go here -->
 		<?php $previous_uuid = null; ?>
 		@for($i=0;$i<count($event_responses[0]['responses']);$i++)
 			@if($event_responses[0]['responses'][$i]->uuid != $previous_uuid)
-				<div>
+				<div class="bg-blue-200 w-full h-full m-auto">
 					{{ $event_responses[0]['responses'][$i]->name }}
 				</div>
 			@endif
@@ -35,7 +37,7 @@
 			</div>
 			<?php $previous_uuid = $event_responses[0]['responses'][$i]->uuid; ?>
 		@endfor
-		<input type="text" placeholder="your name" name="name">
+		<input type="text" placeholder="Respondant" name="name" class='rounded'>
 		<?php $i = 0;?>
 		@foreach($event_details as $details)
 		<input type="hidden" name="event_ids[]" value="{{ $details->id }}">
@@ -51,15 +53,15 @@
 		</div>
 		<?php $i++ ?>
 		@endforeach
-		<input type="submit">
+		<input type="submit" value="Respond" class="py-1 px-3 rounded border-2 text-green-600 border-green-600 hover:bg-green-600 hover:text-white">
 
 		</div>
 	</form>
 
-		<div class="outline mt-5">
-			Share this link with others! <input type='class' class='outline border border-2 rounded p-1 w-auto' id="linkurl" value="{{ route('response.create', ['id'=>$event_details[0]->event_id]) }}">
-			<button onclick="copyLink()" class="rounded bg-blue-500 p-1">Copy</button>
-		</div>
+	<div class="mt-24 text-center pb-10">
+		<span class="text-2xl font-semibold">Share this link with others! It's the only way they can access this page.</span> <input type='class' class='outline border border-2 rounded p-1 w-auto' id="linkurl" value="{{ route('response.create', ['id'=>$event_details[0]->event_id]) }}">
+		<button onclick="copyLink()" class="rounded bg-blue-500 p-1 px-6">Copy to Clipboard</button>
+	</div>
 	<script>
 		function copyLink() {
   			var copyText = document.getElementById("linkurl");
