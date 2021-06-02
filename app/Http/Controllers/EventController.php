@@ -38,13 +38,13 @@ class EventController extends Controller {
 		$event->name = $request->event_name;
 		$event->save();
 
-		$event_id = Event::where('name', $request->event_name)->first();
+		$event_id = $event->id;
 
 		$eventDetails = new EventDetails;
 
 		for ($i=0; $i<count($request->date);$i++) {
 			$details = new EventDetails;
-			$details->event_id = $event_id->id;
+			$details->event_id = $event_id;
 			$details->date = $request->date[$i];
 			$details->time = $request->time[$i];
 			$details->save();
