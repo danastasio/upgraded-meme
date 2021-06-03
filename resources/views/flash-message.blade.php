@@ -17,34 +17,23 @@
 */
 ?>
 @if (Session::has('success'))
-<div class="pt-2">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div style="color: #c6f6d5;background-color: #2f855a;position: relative;border-radius: 0.5rem;padding-top: 0.75rem; padding-bottom: 0.75rem;padding-right: 0.75rem; padding-left: 0.75rem;">
-                        <strong>{{ __(Session::get('success') ) }}</strong>
-                </div>
-        </div>
-</div>
+	<div class="mt-2 bg-green-300 py-2 w-1/2 rounded-lg mx-auto text-center">
+    	<strong>{{ __(Session::get('success') ) }}</strong>
+	</div>
 @endif
 
 @if (Session::has('error') || $errors->any())
 	@if ( $errors->any() )
-		<div class="pt-5">
-		        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-		                <div class="flex justify-center" style="color: #fed7d7;background-color: #c53030;position: relative;border-radius: 0.5rem;padding-top: 0.75rem; padding-bottom: 0.75rem;padding-right: 0.75rem; padding-left: 0.75rem;">
-					<ul>
-						@foreach ($errors->all() as $error)
-							<li><strong>{{ __($error) }}</strong></li>
-						@endforeach
-					</ul>
-				</div>
-			</div>
+		<div class="mt-2 bg-red-300 py-2 w-1/2 rounded-lg mx-auto text-center">
+			<ul>
+				@foreach ($errors->all() as $error)
+					<li><strong>{{ __($error) }}</strong></li>
+				@endforeach
+			</ul>
+		</div>
 	@else
-		<div class="pt-5">
-		        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-		                <div style="color: #fed7d7;background-color: #c53030;position: relative;border-radius: 0.5rem;padding-top: 0.75rem; padding-bottom: 0.75rem;padding-right: 0.75rem; padding-left: 0.75rem;">
-		                        <strong>{{ __(Session::get('error') ) }}</strong>
-		                </div>
-		        </div>
+		<div class="mt-2 bg-red-300 py-2 w-1/2 rounded-lg mx-auto text-center">
+        	<strong>{{ __(Session::get('error') ) }}</strong>
 		</div>
 	@endif
 @endif
@@ -56,11 +45,7 @@
 @endif
 
 @if (Session::has('info'))
-<div class="pt-2">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div style="color: #4a5568;background-color: #cbd5e0;position: relative;border-radius: 0.5rem;padding-top: 0.75rem; padding-bottom: 0.75rem;padding-right: 0.75rem; padding-left: 0.75rem;">
-			<strong>{{ __(Session::get('info')) }}</strong>
-                </div>
-        </div>
-</div>
+	<div class="mt-2 bg-gray-300 py-2 w-1/2 rounded-lg mx-auto text-center">
+		<strong>{{ __(Session::get('info')) }}</strong>
+	</div>
 @endif
