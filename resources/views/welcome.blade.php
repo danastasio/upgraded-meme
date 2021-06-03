@@ -1,4 +1,5 @@
 <x-app-layout>
+	@include('flash-message')
 	<div class='mx-auto text-center mt-4 max-w-7xl mt-20'>
 		<div class="font-bold text-4xl">Welcome to $name</div>
 		<div class="mt-8 font-semibold text-xl">Enter the name of your event to get started</div>

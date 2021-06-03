@@ -50,13 +50,9 @@
 @endif
 
 @if (Session::has('warning'))
-<div class="pt-2">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div style="color: #b7791f;background-color: #fefcbf;position: relative;border-radius: 0.5rem;padding-top: 0.75rem; padding-bottom: 0.75rem;padding-right: 0.75rem; padding-left: 0.75rem;">
-			<strong>{{ __(Session::get('warning')) }}</strong>
-                </div>
-        </div>
-</div>
+	<div class="mt-2 bg-yellow-300 py-2 w-1/2 rounded-lg mx-auto text-center">
+		<strong>{{ __(Session::get('warning')) }}</strong>
+	</div>
 @endif
 
 @if (Session::has('info'))

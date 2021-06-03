@@ -4,16 +4,15 @@
 		<div class="mt-8 font-bold text-2xl">
 			Add the details of your event here!
 		</div>
-		<div class="mt-8 font-semibold text-lg">
-			{{ $event_name }}
-		</div>
-		<div class="mt-8">
-			Date and time options: (time is optional)
-		</div>
 		<form method="post" id="event_details" action="{{ route('event.store') }}">
 			@csrf
 			<div id="event_options">
-				Event Name: <input type="text" name="event_name" value="{{ $event_name }}">
+				<div class='mt-8'>
+					Event Name: <input type="text" name="event_name" value="{{ $event_name }}">
+				</div>
+				<div class="mt-8">
+					Date and time options: (time is optional)
+				</div>
 				<div class="mt-5" id="option">
 					<input name="date[]" type="date">
 					<input name="time[]" type="time">

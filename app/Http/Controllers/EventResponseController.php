@@ -25,6 +25,9 @@ class EventResponseController extends Controller {
      */
     public function create() {
 		$event_details = EventDetails::where('event_id', request()->id)->orderBy('date')->get();
+		if (count($event_details) === 0) {
+			return redirect('/')->withWarning('Event does not exist. You can create it below!');
+		}
 		$event_responses = Event::where('id', request()->id)->with('responses')->get();
         return view('response.create')->with('event_responses', $event_responses)->with('event_details', $event_details);
     }
