@@ -2,15 +2,26 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex w-full">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ url('/') }}">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
+				<div class="my-auto text-2xl ml-5 flex-1">
+					<span class='font-bold'>Event Poll</span>: Totally not a Doodle rip-off, I swear!
+				</div>
 
                 <!-- Navigation Links -->
+				<div class='grid grid-cols-1 h-8 my-auto'>
+					<div>
+						<a href="{{ url('/') }}">Create a new Poll</a>
+					</div>
+					<div>
+						<div class='bg-black h-0.5'></div>
+					</div>
+				</div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
