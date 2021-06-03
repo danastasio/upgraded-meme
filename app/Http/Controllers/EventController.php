@@ -36,6 +36,7 @@ class EventController extends Controller {
     public function store(EventRequest $request) {
 		$event = new Event;
 		$event->name = $request->event_name;
+		$event->description = $request->description;
 		$event->save();
 
 		$event_id = $event->id;

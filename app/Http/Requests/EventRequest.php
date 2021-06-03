@@ -28,6 +28,7 @@ class EventRequest extends FormRequest
 			'event_name' => 'sometimes|required',
 			'name' => 'sometimes|required',
 			'radio*' => 'sometimes|required',
+			'description',
         ];
     }
 }

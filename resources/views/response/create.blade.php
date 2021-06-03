@@ -1,8 +1,12 @@
 <x-app-layout>
 	@include('flash-message')
 
-	<div class='text-center my-10 font-bold text-2xl'>
-		{{ @$event_responses[0]['name'] }}
+	<div class='text-center mt-10 font-bold text-2xl'>
+		{{ $event_responses[0]['name'] }}
+	</div>
+
+	<div class='text-center my-5 font-semibold text-xl'>
+		{{ @$event_responses[0]['description'] }}
 	</div>
 
 	<form method="post" action="{{ route('response.store') }}">
@@ -22,7 +26,7 @@
 		<?php $previous_uuid = null; ?>
 		@for($i=0;$i<count($event_responses[0]['responses']);$i++)
 			@if($event_responses[0]['responses'][$i]->uuid != $previous_uuid)
-				<div class="bg-blue-200 flex">
+				<div class="bg-gray-400 flex">
 					<div class='m-auto text-xl'>
 						{{ $event_responses[0]['responses'][$i]->name }}
 					</div>
@@ -61,8 +65,9 @@
 	</form>
 
 	<div class="mt-24 text-center pb-10">
-		<div class="text-xl font-semibold">Share this link with others! It's the only way they can access this page.</div> <div> <input type='class' class='mt-5 outline border border-2 rounded p-1 w-auto cols-80 w-1/4' id="linkurl" value="{{ route('response.create', ['id'=>$event_details[0]->event_id]) }}"></div>
+		<div class="text-xl font-semibold">Share this link with others! It's the only way they can access this page.</div> <div> <input type='class' class='mt-3 outline border border-2 rounded p-1 w-auto cols-80 w-1/4' id="linkurl" value="{{ route('response.create', ['id'=>$event_details[0]->event_id]) }}"></div>
 		<button onclick="copyLink()" class="rounded bg-blue-500 p-1 px-6 mt-3">Copy to Clipboard</button>
+		<a class='bg-purple-600 p-1 px-6 mt-3 rounded' href="mailto:?subject=Meeting Poll&body=Hello! Please fill out this poll so we can decide on a time for our event! {{ route('response.create', ['id'=>$event_details[0]->event_id]) }}">Email this link!</a>
 	</div>
 	<script>
 		function copyLink() {
