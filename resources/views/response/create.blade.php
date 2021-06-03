@@ -11,7 +11,7 @@
 			<div></div>
 			@foreach( $event_details as $details)
 				<div class='text-center sticky top-0 bg-gray-100 bg-opacity-100 divide-x-2 divide-dashed divide-green-600 py-3'>
-					<div>{{ date("l jS M, Y", strtotime($details->date)) }}</div>
+					<div class='font-semibold'>{{ date("l jS M, Y", strtotime($details->date)) }}</div>
 					@if(isset($details->time))
 						<div>{{ date("g:i a", strtotime($details->time)) }}</div>
 					@endif
@@ -22,8 +22,10 @@
 		<?php $previous_uuid = null; ?>
 		@for($i=0;$i<count($event_responses[0]['responses']);$i++)
 			@if($event_responses[0]['responses'][$i]->uuid != $previous_uuid)
-				<div class="bg-blue-200 w-full h-full m-auto">
-					{{ $event_responses[0]['responses'][$i]->name }}
+				<div class="bg-blue-200 flex">
+					<div class='m-auto text-xl'>
+						{{ $event_responses[0]['responses'][$i]->name }}
+					</div>
 				</div>
 			@endif
 			<div>
@@ -59,8 +61,8 @@
 	</form>
 
 	<div class="mt-24 text-center pb-10">
-		<span class="text-2xl font-semibold">Share this link with others! It's the only way they can access this page.</span> <input type='class' class='outline border border-2 rounded p-1 w-auto' id="linkurl" value="{{ route('response.create', ['id'=>$event_details[0]->event_id]) }}">
-		<button onclick="copyLink()" class="rounded bg-blue-500 p-1 px-6">Copy to Clipboard</button>
+		<div class="text-xl font-semibold">Share this link with others! It's the only way they can access this page.</div> <div> <input type='class' class='mt-5 outline border border-2 rounded p-1 w-auto cols-80 w-1/4' id="linkurl" value="{{ route('response.create', ['id'=>$event_details[0]->event_id]) }}"></div>
+		<button onclick="copyLink()" class="rounded bg-blue-500 p-1 px-6 mt-3">Copy to Clipboard</button>
 	</div>
 	<script>
 		function copyLink() {
