@@ -2,6 +2,7 @@
 This project aims to be a simple replacement for Doodle polls. It allows you to create an event, suggest different dates and times, and have people respond to those dates and times with their availability.
 
 # Built with
+
 - Laravel
 - TailwindCSS
 
@@ -18,4 +19,10 @@ I recommend cloning this project to a local directory and then building a podman
 ![response page](https://github.com/danastasio/upgraded-meme/blob/main/public/images/response.png)
 
 # License
+
 AGPL v3
+
+# Badges
+
+![badge](https://img.shields.io/badge/version-1.0-informational)
+![badge](https://img.shields.io/badge/license-AGPL--3-blue)
