@@ -34,24 +34,19 @@ class EventController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(EventRequest $request) {
-		$event = new Event;
-		$event->name = $request->event_name;
-		$event->description = $request->description;
-		$event->save();
-
-		$event_id = $event->id;
+        $event = new Event($request->validated());
+        $event->save();
 
 		$eventDetails = new EventDetails;
-
 		for ($i=0; $i<count($request->date);$i++) {
 			$details = new EventDetails;
-			$details->event_id = $event_id;
+			$details->event_id = $event->id;
 			$details->date = $request->date[$i];
 			$details->time = $request->time[$i];
 			$details->save();
 		}
 
-		return redirect()->action([EventResponseController::class, 'create'], ['id' => $event_id]);
+		return redirect()->action([EventResponseController::class, 'create'], ['id' => $event->id]);
     }
 
     /**

@@ -10,11 +10,18 @@ class Event extends Model {
 
 	use HasFactory;
 
+	protected $fillable = ['name','event_details'];
+
 	public function details() {
 		return $this->hasMany(EventDetails::class);
 	}
 
 	public function responses() {
-		return $this->hasManyThrough(EventResponses::class,EventDetails::class,'event_id','event_details_id');
+		return $this->hasManyThrough(EventResponses::class, EventDetails::class, 'event_id', 'event_details_id');
 	}
+
+    public static function get_responses(int $event_id)
+    {
+        return EventResponses::where('event_id', $event_id)->with('event')->get();
+    }
 }

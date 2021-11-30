@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\EventDetails;
 use App\Models\EventResponses;
 use App\Http\Requests\EventRequest;
+use App\Http\Requests\EventResponseRequest;
 
 class EventResponseController extends Controller {
     /**
@@ -23,13 +24,12 @@ class EventResponseController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-		$event_details = EventDetails::where('event_id', request()->id)->orderBy('date')->get();
-		if (count($event_details) === 0) {
-			return redirect('/')->withWarning('Event does not exist. You can create it below!');
-		}
-		$event_responses = Event::where('id', request()->id)->with('responses')->get();
-        return view('response.create')->with('event_responses', $event_responses)->with('event_details', $event_details);
+    public function create(EventResponseRequest $request) {
+        return view('response.create')->with([
+            'event'             => Event::find($request->id),
+            'event_responses'   => Event::find($request->id)->with("responses")->get(),
+            'event_details'     => EventDetails::where('event_id', $request->id)->get(),
+        ]);
     }
 
     /**
@@ -49,9 +49,12 @@ class EventResponseController extends Controller {
 			$response->uuid = $request_uuid;
 			$response->save();
 		}
-		$event_details = EventDetails::where('event_id', request()->event_id)->orderBy('date')->get();
-		$event_responses = Event::where('id', request()->event_id)->with('responses')->get();
-        return view('response.create')->with('event_responses', $event_responses)->with('event_details', $event_details);
+		return view('response.create')->with([
+            'event'             => Event::find($request->event_id),
+            'event_responses'   => EventResponses::where('event_id', $request->event_id)->get(),
+            'event_details'     => EventDetails::where('event_id', $request->event_id)->get(),
+        ]);
+
     }
 
     /**
