@@ -9,11 +9,10 @@
 		{{ $event->description }}
 	</div>
 
-	<form method="post" action="{{ route('response.store') }}">
-		@csrf
-		<div class="grid grid-cols-{{ count($event_details) + 1}} max-w-6xl gap-2 mx-auto">
+
+		<div class="grid grid-cols-{{ count($event->details) + 1}} max-w-6xl gap-2 mx-auto">
 			<div></div>
-			@foreach( $event_details as $details)
+			@foreach( $event->details as $details)
 				<div class='text-center sticky top-0 bg-gray-100 bg-opacity-100 divide-x-2 divide-dashed divide-green-600 py-3'>
 					<div class='font-semibold'>{{ date("l jS M, Y", strtotime($details->date)) }}</div>
 					@if(isset($details->time))
@@ -21,17 +20,15 @@
 					@endif
 				</div>
 			@endforeach
-
+        </div>
 		<!-- already responses go here -->
-		<?php $previous_uuid = null; ?>
-	    @foreach($event_responses as $response)
-			@if($response->uuid != $previous_uuid)
+	    @foreach($event->responses as $response)
+	    <div class="grid grid-cols-{{ count($event->details) }}">
 				<div class="bg-gray-400 flex">
 					<div class='m-auto text-xl'>
 						{{ $response->name }}
 					</div>
 				</div>
-			@endif
 			<div>
 				@if($response->response === "yes")
 					<div class='h-full w-full bg-green-600'><img src="{{ url('/images/yes.png') }}" class='py-3 mx-auto w-10'></div>
@@ -41,23 +38,22 @@
 					<div class='h-full w-full bg-red-600'><img src="{{ url('/images/no.png') }}" class='py-3 mx-auto w-10'></div>
 				@endif
 			</div>
-			<?php $previous_uuid = $response->uuid; ?>
-		@endforeach
-		<input type="text" placeholder="Respondant" name="name" class='rounded'>
-		<?php $i = 0;?>
-		@foreach($event_details as $details)
-		<input type="hidden" name="event_ids[]" value="{{ $details->id }}">
-		<input type="hidden" name="event_id" value="{{ $event->id }}">
-		<!-- <input type="checkbox" name="event_response[]" class="m-auto" style="transform: scaleX(-1);"> -->
-		<div>
-			<input type="radio" name="{{ 'radio' . $details->id }}" value="yes">
-			<label for="yes">Yes</label><br>
-			<input type="radio" name="{{ 'radio' . $details->id }}" value="maybe">
-			<label for="yes">Maybe</label><br>
-			<input type="radio" name="{{ 'radio' . $details->id }}" value="no" checked="checked">
-			<label for="yes">No</label>
 		</div>
-		<?php $i++ ?>
+		@endforeach
+		<form method="post" action="{{ route('response.store') }}">
+		@csrf
+		<input type="text" placeholder="Respondant" name="name" class='rounded'>
+		@foreach($event->details as $details)
+		    <input type="hidden" name="event_ids[]" value="{{ $details->id }}">
+		    <input type="hidden" name="event_id" value="{{ $event->id}}">
+		    <div>
+			    <input type="radio" name="{{ 'radio' . $details->id }}" value="yes">
+			    <label for="yes">Yes</label><br>
+			    <input type="radio" name="{{ 'radio' . $details->id }}" value="maybe">
+			    <label for="yes">Maybe</label><br>
+			    <input type="radio" name="{{ 'radio' . $details->id }}" value="no" checked="checked">
+			    <label for="yes">No</label>
+		    </div>
 		@endforeach
 		<input type="submit" value="Respond" class="py-1 px-3 rounded border-2 text-green-600 border-green-600 hover:bg-green-600 hover:text-white">
 

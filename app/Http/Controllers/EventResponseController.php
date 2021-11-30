@@ -38,21 +38,18 @@ class EventResponseController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EventRequest $request) {
-		$request_uuid = exec('uuidgen -r');
-        for ($i=0;$i<count($request->event_ids);$i++) {
+    public function store(EventResponseRequest $request) {
+        foreach ($request->event_ids as $event_id) {
 			$response = new EventResponses;
 			$response->name = $request->name;
-			$response->event_details_id = $request->event_ids[$i];
-			$var = "radio".$i;
+			$response->event_details_id = $event_id;
+			$var = "radio".$event_id;
 			$response->response = $request->$var;
-			$response->uuid = $request_uuid;
+			$response->uuid = "de04c759-03d3-4ff6-bebb-6af8353ce092";
 			$response->save();
 		}
 		return view('response.create')->with([
-            'event'             => Event::find($request->event_id),
-            'event_responses'   => EventResponses::where('event_id', $request->event_id)->get(),
-            'event_details'     => EventDetails::where('event_id', $request->event_id)->get(),
+            'event' => Event::find($request->event_id)->with(['responses', 'details'])->first(),
         ]);
 
     }

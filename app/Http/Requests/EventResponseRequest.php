@@ -26,6 +26,9 @@ class EventResponseRequest extends FormRequest
         return [
             'id' => 'sometimes|exists:App\Models\Event,id',
             'event_id' => 'sometimes',
+            'event_details_id' => 'sometimes',
+            'event_ids' => 'sometimes',
+
         ];
     }
 }
