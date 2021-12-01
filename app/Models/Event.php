@@ -13,7 +13,7 @@ class Event extends Model {
 	protected $fillable = ['name','event_details'];
 
 	public function details() {
-		return $this->hasMany(EventDetails::class);
+		return $this->hasMany(EventDetails::class, 'event_id');
 	}
 
 	public function responses() {

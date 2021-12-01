@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Event;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Models\EventDetails;
 use App\Models\EventResponses;
 use App\Http\Requests\EventRequest;
@@ -39,17 +40,18 @@ class EventResponseController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(EventResponseRequest $request) {
+        $uuid = Str::uuid()->toString();
         foreach ($request->event_ids as $event_id) {
 			$response = new EventResponses;
 			$response->name = $request->name;
 			$response->event_details_id = $event_id;
 			$var = "radio".$event_id;
 			$response->response = $request->$var;
-			$response->uuid = "de04c759-03d3-4ff6-bebb-6af8353ce092";
+			$response->uuid = $uuid;
 			$response->save();
 		}
 		return view('response.create')->with([
-            'event' => Event::find($request->event_id)->with(['responses', 'details'])->first(),
+            'event' => Event::where('id', $request->event_id)->with(['responses', 'details'])->first(),
         ]);
 
     }
