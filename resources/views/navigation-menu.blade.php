@@ -9,19 +9,8 @@
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
-				<div class="my-auto text-2xl ml-5 flex-1">
-					<span class='font-bold'>Foodle Poll</span>: Totally not a Doodle rip-off, I swear!
-				</div>
-
-                <!-- Navigation Links -->
-				<div class='grid grid-cols-1 h-8 my-auto'>
-					<div>
-						<a href="{{ url('/') }}">Create a new Poll</a>
-					</div>
-					<div>
-						<div class='bg-black h-0.5'></div>
-					</div>
-				</div>
+                <div class="font-bold text-2xl my-auto ml-4">Foodle Poll</div>
+                <div class="font-normal text-xl ml-2 my-auto hidden sm:block">Totally not a Doodle poll ripoff, I swear!</div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
