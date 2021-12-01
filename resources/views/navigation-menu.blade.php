@@ -10,7 +10,7 @@
                     </a>
                 </div>
 				<div class="my-auto text-2xl ml-5 flex-1">
-					<span class='font-bold'>Event Poll</span>: Totally not a Doodle rip-off, I swear!
+					<span class='font-bold'>Foodle Poll</span>: Totally not a Doodle rip-off, I swear!
 				</div>
 
                 <!-- Navigation Links -->
