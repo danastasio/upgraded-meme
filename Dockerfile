@@ -21,6 +21,8 @@ RUN microdnf reinstall -y tzdata
 WORKDIR /app
 COPY . /app
 
+RUN composer update
+RUN npm update
 RUN cp /app/.env.example /app/.env
 RUN touch /app/database/database.db
 RUN yes "no" | php artisan key:generate
