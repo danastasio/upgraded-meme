@@ -20,45 +20,65 @@
 					@endif
 				</div>
 			@endforeach
-        </div>
+		</div>
 		<!-- already responses go here -->
-	    @foreach($event->responses as $response)
-	    <div class="grid grid-cols-{{ count($event->details) }}">
-				<div class="bg-gray-400 flex">
-					<div class='m-auto text-xl'>
-						{{ $response->name }}
-					</div>
-				</div>
-			<div>
-				@if($response->response === "yes")
-					<div class='h-full w-full bg-green-600'><img src="{{ url('/images/yes.png') }}" class='py-3 mx-auto w-10'></div>
-				@elseif($response->response === "maybe")
-					<div class='h-full w-full bg-yellow-600'><img src="{{ url('/images/maybe.png') }}" class='py-3 mx-auto w-10'></div>
-				@else
-					<div class='h-full w-full bg-red-600'><img src="{{ url('/images/no.png') }}" class='py-3 mx-auto w-10'></div>
-				@endif
-			</div>
-		</div>
-		@endforeach
-		<form method="post" action="{{ route('response.store') }}">
-		@csrf
-		<input type="text" placeholder="Respondant" name="name" class='rounded'>
-		@foreach($event->details as $details)
-		    <input type="hidden" name="event_ids[]" value="{{ $details->id }}">
-		    <input type="hidden" name="event_id" value="{{ $event->id}}">
-		    <div>
-			    <input type="radio" name="{{ 'radio' . $details->id }}" value="yes">
-			    <label for="yes">Yes</label><br>
-			    <input type="radio" name="{{ 'radio' . $details->id }}" value="maybe">
-			    <label for="yes">Maybe</label><br>
-			    <input type="radio" name="{{ 'radio' . $details->id }}" value="no" checked="checked">
-			    <label for="yes">No</label>
-		    </div>
-		@endforeach
-		<input type="submit" value="Respond" class="py-1 px-3 rounded border-2 text-green-600 border-green-600 hover:bg-green-600 hover:text-white">
 
+		<div class="grid grid-cols-{{ count($event->details) + 1 }} max-w-6xl gap-2 mx-auto">
+			@php
+				$last_uuid = null
+			@endphp
+			@foreach($event->responses as $response)
+				@if($last_uuid != $response->uuid)
+					@php
+						$last_uuid = $response->uuid;
+						$new_line = true;
+					@endphp
+				@endif
+				@if($new_line)
+					<div class="bg-gray-400 flex">
+						<div class='m-auto text-xl'>
+							{{ $response->name }}
+						</div>
+					</div>
+					@php
+						$new_line = false;
+					@endphp
+				@endif
+				<div>
+					@if($response->response === "yes")
+						<div class='h-full w-full bg-green-600'><img src="{{ url('/images/yes.png') }}" class='py-3 mx-auto w-10'></div>
+					@elseif($response->response === "maybe")
+						<div class='h-full w-full bg-yellow-600'><img src="{{ url('/images/maybe.png') }}" class='py-3 mx-auto w-10'></div>
+					@else
+						<div class='h-full w-full bg-red-600'><img src="{{ url('/images/no.png') }}" class='py-3 mx-auto w-10'></div>
+					@endif
+				</div>
+			@endforeach
 		</div>
-	</form>
+		<form method="post" action="{{ route('response.store') }}">
+			<div class="grid grid-cols-{{ count($event->details) + 1 }} max-w-6xl gap-2 mx-auto mt-4">
+				@csrf
+				<div>
+					<input type="text" placeholder="Respondant" name="name" class="w-full h-full rounded">
+				</div>
+				@foreach($event->details as $details)
+					<input type="hidden" name="event_ids[]" value="{{ $details->id }}">
+					<input type="hidden" name="event_id" value="{{ $event->id }}">
+
+					<div>
+						<input type="radio" name="{{ 'radio' . $details->id }}" value="yes">
+						<label for="yes">Yes</label><br>
+						<input type="radio" name="{{ 'radio' . $details->id }}" value="maybe">
+						<label for="yes">Maybe</label><br>
+						<input type="radio" name="{{ 'radio' . $details->id }}" value="no" checked="checked">
+						<label for="yes">No</label>
+					</div>
+				@endforeach
+				<div>
+					<input type="submit" value="Respond" class="py-1 px-3 rounded border-2 text-green-600 border-green-600 hover:bg-green-600 hover:text-white w-full">
+				</div>
+			</form>
+		</div>
 
 	<div class="mt-24 text-center pb-10">
 		<div class="text-xl font-semibold">Share this link with others! It's the only way they can access this page.</div> <div> <input type='class' class='mt-3 outline border border-2 rounded p-1 w-auto cols-80 w-1/4' id="linkurl" value="{{ route('response.create', ['id'=>$event->id]) }}"></div>
