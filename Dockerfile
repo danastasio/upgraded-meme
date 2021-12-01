@@ -29,7 +29,7 @@ RUN touch /app/database/database.db
 RUN yes "no" | php artisan key:generate
 RUN php artisan migrate --force
 RUN php artisan optimize:clear
-RUN php artisan optimize:cache
+RUN php artisan optimize
 RUN mkdir /var/run/php-fpm
 RUN chmod 777 /app -R
 
