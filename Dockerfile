@@ -15,13 +15,12 @@
 
 FROM docker.io/library/fedora
 
-RUN dnf install -y libmcrypt-devel sqlite sqlite-devel git zip unzip uuid-devel vim php nodejs caddy php-fpm
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN dnf install -y libmcrypt-devel sqlite sqlite-devel git zip unzip uuid-devel vim php nodejs caddy php-fpm composer
 
 WORKDIR /app
 COPY . /app
 
+RUN composer update
 RUN composer install --no-interaction
 RUN cp /app/.env.example /app/.env
 RUN touch /app/database/database.db
