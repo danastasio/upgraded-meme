@@ -21,15 +21,15 @@ RUN microdnf reinstall -y tzdata
 WORKDIR /app
 COPY . /app
 
+RUN composer update
+RUN npm install
+RUN npm run prod
 RUN cp /app/.env.example /app/.env
 RUN touch /app/database/database.db
 RUN yes "no" | php artisan key:generate
 RUN php artisan migrate --force
 RUN php artisan optimize:clear
-RUN php artisan storage:link
-RUN php artisan view:cache
-RUN php artisan config:cache
-RUN php artisan route:cache
+RUN php artisan optimize:cache
 RUN mkdir /var/run/php-fpm
 RUN chmod 777 /app -R
 

@@ -1,6 +1,6 @@
 <x-app-layout>
 	@include('flash-message')
-	<div class="flex-none mx-auto text-center px-2">
+	<div class="flex-none mx-auto text-center px-2 pb-2">
 		<div class="mt-8 font-bold text-2xl">
 			Add the details of your event here!
 		</div>
