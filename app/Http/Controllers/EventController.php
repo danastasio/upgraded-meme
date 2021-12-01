@@ -22,8 +22,7 @@ class EventController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-        $request = request();
+    public function create(EventRequest $request) {
         return view('event.create')->with('event_name', $request->event_name);
     }
 

@@ -71,7 +71,7 @@
 			<div class="grid grid-cols-{{ count($event->details) + 1 }} max-w-6xl gap-2 mx-auto mt-4">
 				@csrf
 				<div>
-					<input type="text" placeholder="Your Name" name="name" class="w-full h-full rounded">
+					<input type="text" placeholder="Your Name" name="name" class="w-full h-full rounded" required>
 				</div>
 				@foreach($event->details as $details)
 					<input type="hidden" name="event_ids[]" value="{{ $details->id }}">

@@ -11,7 +11,7 @@
 					<label for="event_name">Event Name:</label>
 				</div>
 				<div class="w-full">
-					<input type="text" name="name" value="{{ $event_name }}" class="rounded">
+					<input type="text" name="name" value="{{ $event_name }}" class="rounded text-center" required>
 				</div>
 				<div class="mt-5">
 					<label for="description">Event summary</label>
