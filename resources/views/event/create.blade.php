@@ -1,12 +1,12 @@
 <x-app-layout>
 	@include('flash-message')
-	<div class="mx-auto text-center">
+	<div class="flex-none mx-auto text-center px-2">
 		<div class="mt-8 font-bold text-2xl">
 			Add the details of your event here!
 		</div>
 		<form method="post" id="event_details" action="{{ route('event.store') }}">
 			@csrf
-			<div id="event_options" class="w-1/2 mx-auto mt-8">
+			<div id="event_options" class="mx-auto mt-8">
 				<div>
 					<label for="event_name">Event Name:</label>
 				</div>
@@ -29,7 +29,7 @@
 					<input name="time[]" type="time" class="rounded">
 				</div>
 			</div>
-			<div class="grid grid-cols-2 gap-2 max-w-lg mx-auto mt-8">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-2 mx-auto mt-8 max-w-lg">
 				<button type="button" onclick="addOption()" class="py-3 bg-blue-500 rounded text-white text-center">Add another date and time</button>
 				<input type="submit" class="py-3 bg-green-500 hover:bg-green-800 text-white rounded text-lg" value="Create Event">
 			</div>
