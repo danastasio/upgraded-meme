@@ -24,10 +24,11 @@ class EventResponseRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'sometimes|exists:App\Models\Event,id',
+            'id' => 'sometimes|exists:App\Models\Event,uuid',
             'event_id' => 'sometimes',
             'event_details_id' => 'sometimes',
             'event_ids' => 'sometimes',
+            'uuid' => '',
 
         ];
     }

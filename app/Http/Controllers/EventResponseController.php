@@ -27,8 +27,8 @@ class EventResponseController extends Controller {
      */
     public function create(EventResponseRequest $request) {
         return view('response.create')->with([
-            'event'             => Event::find($request->id),
-            'event_responses'   => Event::find($request->id)->with("responses")->get(),
+            'event'             => Event::where('uuid', $request->uuid)->first(),
+            'event_responses'   => Event::where('uuid', $request->uuid)->with("responses")->first(),
             'event_details'     => EventDetails::where('event_id', $request->id)->get(),
         ]);
     }

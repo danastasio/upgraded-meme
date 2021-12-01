@@ -23,7 +23,7 @@ class EventController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-		$request = request();
+        $request = request();
         return view('event.create')->with('event_name', $request->event_name);
     }
 
@@ -34,10 +34,7 @@ class EventController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(EventRequest $request) {
-        $event = new Event($request->validated());
-        $event->save();
-
-		$eventDetails = new EventDetails;
+        $event = Event::create($request->validated());
 		for ($i=0; $i<count($request->date);$i++) {
 			$details = new EventDetails;
 			$details->event_id = $event->id;
@@ -45,8 +42,11 @@ class EventController extends Controller {
 			$details->time = $request->time[$i];
 			$details->save();
 		}
-
-		return redirect()->action([EventResponseController::class, 'create'], ['id' => $event->id]);
+        return view('response.create')->with([
+            'event'             => $event,
+            'event_responses'   => $event->with("responses")->get(),
+            'event_details'     => EventDetails::where('event_id', $event->id)->get(),
+        ]);
     }
 
     /**

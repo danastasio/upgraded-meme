@@ -13,25 +13,19 @@
 #You should have received a copy of the GNU Affero General Public License
 #along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-FROM docker.io/library/fedora
+FROM registry.fedoraproject.org/fedora-minimal
 
-RUN dnf install -y libmcrypt-devel sqlite sqlite-devel git zip unzip uuid-devel vim php nodejs caddy php-fpm composer
+RUN microdnf install -y libmcrypt-devel sqlite sqlite-devel uuid-devel vim php nodejs caddy php-fpm composer
+RUN microdnf reinstall -y tzdata 
 
 WORKDIR /app
 COPY . /app
 
-RUN composer update
-RUN composer install --no-interaction
 RUN cp /app/.env.example /app/.env
 RUN touch /app/database/database.db
 RUN yes "no" | php artisan key:generate
 RUN php artisan migrate --force
-RUN npm i npm@latest -g
-RUN npm install
-RUN npm run prod
-RUN php artisan view:clear
-RUN php artisan config:clear
-RUN php artisan route:clear
+RUN php artisan optimize:clear
 RUN php artisan storage:link
 RUN php artisan view:cache
 RUN php artisan config:cache

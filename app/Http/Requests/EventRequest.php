@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EventRequest extends FormRequest
@@ -13,7 +14,11 @@ class EventRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if ($this->route()->action['as'] === "event.destroy") {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -28,7 +33,15 @@ class EventRequest extends FormRequest
 			'event_name' => 'sometimes|required',
 			'name' => 'sometimes|required',
 			'radio*' => 'sometimes|required',
-			'description',
+			'description' => 'sometimes',
+			'uuid' => '',
         ];
+    }
+
+    public function validated()
+    {
+        return array_merge($this->all(), [
+            'uuid' => Str::uuid()->toString(),
+        ]);
     }
 }

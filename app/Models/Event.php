@@ -10,7 +10,7 @@ class Event extends Model {
 
 	use HasFactory;
 
-	protected $fillable = ['name','event_details'];
+	protected $fillable = ['name','description', 'uuid'];
 
 	public function details() {
 		return $this->hasMany(EventDetails::class, 'event_id');
