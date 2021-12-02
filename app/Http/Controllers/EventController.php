@@ -42,7 +42,7 @@ class EventController extends Controller {
 			$details->save();
 		}
         return view('response.create')->with([
-            'event'             => Event::where('id', $event->id)->with(["details", "responses"])->first(),
+            'event' => Event::where('id', $event->id)->with(["details", "responses"])->first(),
         ]);
     }
 
