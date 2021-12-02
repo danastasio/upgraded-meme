@@ -25,8 +25,8 @@
 					Date and time options: (time is optional)
 				</div>
 				<div class="mt-5" id="option">
-					<input name="date[]" type="date" class="rounded">
-					<input name="time[]" type="time" class="rounded">
+					<input name="event_details[0][date]" type="date" class="rounded">
+					<input name="event_details[0][time]" type="time" class="rounded">
 				</div>
 			</div>
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-2 mx-auto mt-8 max-w-lg">
@@ -37,16 +37,20 @@
 	</div>
 	<div class="hidden">
 		<div class="mt-5" id="blank_options" name="blank_options">
-			<input name="date[]" type="date" class="rounded">
-			<input name="time[]" type="time" class="rounded">
+			<input id="date" name="" type="date" class="rounded">
+			<input id="time" name="" type="time" class="rounded">
 		</div>
 	</div>
 	<script>
-		addons = 1;
+		var addons = 1;
+		var time_addons = 1;
 		function addOption() {
-    		var original = document.getElementById("blank_options");
-    		var clone = original.cloneNode(true);
+    		let original = document.getElementById("blank_options");
+    		let clone = original.cloneNode(true);
+    		clone.querySelector("#date").setAttribute("name", "event_details[" + time_addons + "][date]");
+    		clone.querySelector("#time").setAttribute("name", "event_details[" + time_addons + "][time]");
     		document.getElementById("time_options").appendChild(clone);
+    		time_addons += 1;
 		}
 	function addPerson() {
 		if (addons < 6) {
