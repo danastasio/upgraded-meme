@@ -53,7 +53,6 @@ class EventResponseController extends Controller {
 		return view('response.create')->with([
             'event' => Event::where('id', $request->event_id)->with(['responses', 'details'])->first(),
         ]);
-
     }
 
     /**

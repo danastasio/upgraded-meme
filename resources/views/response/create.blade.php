@@ -10,9 +10,9 @@
 	</div>
 
 
-		<div class="grid grid-cols-{{ count($event->details) + 1}} max-w-6xl gap-2 mx-auto divide-x-2 divide-dashed divide-green-600">
+		<div class="grid grid-cols-{{ count($event['details']) + 1}} max-w-6xl gap-2 mx-auto divide-x-2 divide-dashed divide-green-600">
 			<div></div>
-			@foreach( $event->details as $details)
+			@foreach( $event['details'] as $details)
 				<div class="text-center sticky top-0 bg-gray-100 bg-opacity-100 py-3">
 					<div class="font-semibold">{{ date("l jS M, Y", strtotime($details->date)) }}</div>
 					@if(isset($details->time))
@@ -23,11 +23,11 @@
 		</div>
 		<!-- already responses go here -->
 
-		<div class="grid grid-cols-{{ count($event->details) + 1 }} max-w-6xl gap-2 mx-auto">
+		<div class="grid grid-cols-{{ count($event['details']) + 1 }} max-w-6xl gap-2 mx-auto">
 			@php
 				$last_uuid = null
 			@endphp
-			@foreach($event->responses as $response)
+			@foreach($event['responses'] as $response)
 				@if($last_uuid != $response->uuid)
 					@php
 						$last_uuid = $response->uuid;
@@ -68,15 +68,14 @@
 			@endforeach
 		</div>
 		<form method="post" action="{{ route('response.store') }}">
-			<div class="grid grid-cols-{{ count($event->details) + 1 }} max-w-6xl gap-2 mx-auto mt-4">
+			<div class="grid grid-cols-{{ count($event['details']) + 1 }} max-w-6xl gap-2 mx-auto mt-4">
 				@csrf
 				<div>
 					<input type="text" placeholder="Your Name" name="name" class="w-full h-full rounded" required>
 				</div>
-				@foreach($event->details as $details)
+				@foreach($event['details'] as $details)
 					<input type="hidden" name="event_ids[]" value="{{ $details->id }}">
 					<input type="hidden" name="event_id" value="{{ $event->id }}">
-
 					<div>
 						<input type="radio" name="{{ 'radio' . $details->id }}" value="yes">
 						<label for="yes">Yes</label><br>
