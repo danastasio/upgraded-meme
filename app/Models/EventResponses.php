@@ -9,6 +9,7 @@ use App\Models\Event;
 class EventResponses extends Model {
 
     use HasFactory;
+    protected $fillable = ['name', 'event_details_id', 'response', 'uuid'];
 
 	public function eventDetails() {
 		return $this->belongsTo(EventDetails::class);

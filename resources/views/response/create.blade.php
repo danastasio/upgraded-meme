@@ -71,17 +71,17 @@
 			<div class="grid grid-cols-{{ count($event['details']) + 1 }} max-w-6xl gap-2 mx-auto mt-4">
 				@csrf
 				<div>
-					<input type="text" placeholder="Your Name" name="name" class="w-full h-full rounded" required>
+					<input type="text" placeholder="Your Name" name="user_response[{{$details->id}}][name]" class="w-full h-full rounded" required>
 				</div>
 				@foreach($event['details'] as $details)
-					<input type="hidden" name="event_ids[]" value="{{ $details->id }}">
+					<input type="hidden" name="user_response[{{$details->id}}][event_details_id]" value="{{ $details->id }}">
 					<input type="hidden" name="event_id" value="{{ $event->id }}">
 					<div>
-						<input type="radio" name="{{ 'radio' . $details->id }}" value="yes">
+						<input type="radio" name="user_response[{{ $details->id }}][response]" value="yes">
 						<label for="yes">Yes</label><br>
-						<input type="radio" name="{{ 'radio' . $details->id }}" value="maybe">
+						<input type="radio" name="user_response[{{ $details->id }}][response]" value="maybe">
 						<label for="yes">Maybe</label><br>
-						<input type="radio" name="{{ 'radio' . $details->id }}" value="no" checked="checked">
+						<input type="radio" name="user_response[{{ $details->id }}][response]" value="no" checked="checked">
 						<label for="yes">No</label>
 					</div>
 				@endforeach
