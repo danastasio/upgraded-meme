@@ -10,6 +10,8 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+        <!-- Favicon -->
+        <link rel="icon" href="{{ asset('favicon.ico') }}?v={{ date('YmdHis') }}">
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
