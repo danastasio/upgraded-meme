@@ -37,7 +37,7 @@ class EventController extends Controller {
 		foreach( $request->event_details as $details) {
 			EventDetails::create($details, $event);
 		}
-	    return view('response.create')->with([
+		return view('response.create')->with([
 			'event' => Event::where('id', $event->id)->with(["details", "responses"])->first(),
 		]);
 	}

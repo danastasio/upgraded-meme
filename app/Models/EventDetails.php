@@ -11,7 +11,7 @@ class EventDetails extends Model
 
 	public static function create(array $attributes, Event $event): EventDetails
 	{
-	    $details = new EventDetails;
+		$details = new EventDetails;
 		$details->fill($attributes);
 		$details->event()->associate($event);
 		$details->save();
