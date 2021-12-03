@@ -41,19 +41,14 @@ class EventResponseController extends Controller {
      */
     public function store(EventResponseRequest $request) {
         $uuid = Str::uuid()->toString();
-        foreach ($request->event_ids as $event_id) {
-			$response = new EventResponses;
-			$response->name = $request->name;
-			$response->event_details_id = $event_id;
-			$var = "radio".$event_id;
-			$response->response = $request->$var;
+        foreach ($request->user_response as $user_response) {
+			$response = new EventResponses($user_response);
 			$response->uuid = $uuid;
 			$response->save();
 		}
 		return view('response.create')->with([
             'event' => Event::where('id', $request->event_id)->with(['responses', 'details'])->first(),
         ]);
-
     }
 
     /**

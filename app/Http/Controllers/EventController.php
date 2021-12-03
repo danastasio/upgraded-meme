@@ -34,17 +34,13 @@ class EventController extends Controller {
      */
     public function store(EventRequest $request) {
         $event = Event::create($request->validated());
-		for ($i=0; $i<count($request->date);$i++) {
-			$details = new EventDetails;
-			$details->event_id = $event->id;
-			$details->date = $request->date[$i];
-			$details->time = $request->time[$i];
-			$details->save();
-		}
-        return view('response.create')->with([
-            'event'             => $event,
-            'event_responses'   => $event->with("responses")->get(),
-            'event_details'     => EventDetails::where('event_id', $event->id)->get(),
+        foreach( $request->event_details as $details) {
+            $response = new EventDetails($details);
+            $response->event()->associate($event);
+            $response->save();
+        }
+       return view('response.create')->with([
+            'event' => Event::where('id', $event->id)->with(["details", "responses"])->first(),
         ]);
     }
 
