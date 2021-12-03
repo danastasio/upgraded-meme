@@ -75,7 +75,7 @@
 				</div>
 				@foreach($event['details'] as $details)
 					<input type="hidden" name="user_response[{{$details->id}}][event_details_id]" value="{{ $details->id }}">
-					<input type="hidden" name="event_id" value="{{ $event->id }}">
+					<input type="hidden" name="event_uuid" value="{{ $event->uuid }}">
 					<div>
 						<input type="radio" name="user_response[{{ $details->id }}][response]" value="yes">
 						<label for="yes">Yes</label><br>

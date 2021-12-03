@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\EventDetails;
 use App\Models\EventResponses;
@@ -27,9 +26,7 @@ class EventResponseController extends Controller {
      */
     public function create(EventResponseRequest $request) {
         return view('response.create')->with([
-            'event'             => Event::where('uuid', $request->uuid)->first(),
-            'event_responses'   => Event::where('uuid', $request->uuid)->with("responses")->first(),
-            'event_details'     => EventDetails::where('event_id', $request->id)->get(),
+            'event' => Event::where('uuid', $request->uuid)->with(['details', 'responses'])->first(),
         ]);
     }
 
@@ -40,15 +37,11 @@ class EventResponseController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(EventResponseRequest $request) {
-        $uuid = Str::uuid()->toString();
         foreach ($request->user_response as $user_response) {
-			$response = new EventResponses($user_response);
-			$response->name = $request->name;
-			$response->uuid = $uuid;
-			$response->save();
+			EventResponses::create($user_response, $request->name, $request->uuid());
 		}
 		return view('response.create')->with([
-            'event' => Event::where('id', $request->event_id)->with(['responses', 'details'])->first(),
+            'event' => Event::where('uuid', $request->event_uuid)->with(['responses', 'details'])->first(),
         ]);
     }
 

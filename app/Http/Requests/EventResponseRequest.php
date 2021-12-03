@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EventResponseRequest extends FormRequest
@@ -25,11 +26,21 @@ class EventResponseRequest extends FormRequest
     {
         return [
             'id' => 'sometimes|exists:App\Models\Event,uuid',
-            'event_id' => 'sometimes',
+            'event_uuid' => 'sometimes',
             'event_details_id' => 'sometimes',
             'event_ids' => 'sometimes',
             'uuid' => '',
 
         ];
+    }
+
+    public function uuid()
+    {
+        if (!isset($this->uuid)) {
+            $this->uuid = Str::uuid()->toString();
+            return $this->uuid;
+        } else {
+            return $this->uuid;
+        }
     }
 }
