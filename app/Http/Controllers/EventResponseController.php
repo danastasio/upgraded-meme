@@ -43,6 +43,7 @@ class EventResponseController extends Controller {
         $uuid = Str::uuid()->toString();
         foreach ($request->user_response as $user_response) {
 			$response = new EventResponses($user_response);
+			$response->name = $request->name;
 			$response->uuid = $uuid;
 			$response->save();
 		}
